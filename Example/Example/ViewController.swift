@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import KUIAlignmentButtonBar
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, KUIAlignmentButtonBarDelegate {
 
+    @IBOutlet weak var horizontalButtonBar: KUIAlignmentButtonBar!
+    @IBOutlet weak var verticalButtonBar: KUIAlignmentButtonBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        horizontalButtonBar.alignment = .Right
+        horizontalButtonBar.delegate = self
+        horizontalButtonBar.refresh()
+        
+        verticalButtonBar.alignment = .Bottom
+        verticalButtonBar.delegate = self
+        verticalButtonBar.refresh()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,5 +33,20 @@ class ViewController: UIViewController {
     }
 
 
+    // MARK: - KUIAlignmentButtonBarDelegate
+    func render(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
+        let title = "Title_\(index)"
+        
+        button.layer.borderColor = UIColor.blueColor().CGColor
+        button.layer.borderWidth = 1.0
+        
+        button.setTitle(title, forState: .Normal)
+        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+    }
+    
+    // Optional
+    func click(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
+        print("index : \(index)")
+    }
 }
 

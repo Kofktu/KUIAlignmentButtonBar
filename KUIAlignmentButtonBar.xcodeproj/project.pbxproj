@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C3720C541DA4B13A00D0A3F1 /* KUIAlignmentButtonBar.h in Headers */ = {isa = PBXBuildFile; fileRef = C3720C521DA4B13A00D0A3F1 /* KUIAlignmentButtonBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C3720C841DA4B43A00D0A3F1 /* KUIAlignmentButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3720C831DA4B43A00D0A3F1 /* KUIAlignmentButtonBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C3720C4F1DA4B13A00D0A3F1 /* KUIAlignmentButtonBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KUIAlignmentButtonBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3720C521DA4B13A00D0A3F1 /* KUIAlignmentButtonBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KUIAlignmentButtonBar.h; sourceTree = "<group>"; };
 		C3720C531DA4B13A00D0A3F1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C3720C831DA4B43A00D0A3F1 /* KUIAlignmentButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KUIAlignmentButtonBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +48,19 @@
 		C3720C511DA4B13A00D0A3F1 /* KUIAlignmentButtonBar */ = {
 			isa = PBXGroup;
 			children = (
+				C3720C821DA4B3B600D0A3F1 /* Classes */,
 				C3720C521DA4B13A00D0A3F1 /* KUIAlignmentButtonBar.h */,
 				C3720C531DA4B13A00D0A3F1 /* Info.plist */,
 			);
 			path = KUIAlignmentButtonBar;
+			sourceTree = "<group>";
+		};
+		C3720C821DA4B3B600D0A3F1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C3720C831DA4B43A00D0A3F1 /* KUIAlignmentButtonBar.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -95,6 +106,7 @@
 				TargetAttributes = {
 					C3720C4E1DA4B13A00D0A3F1 = {
 						CreatedOnToolsVersion = 8.0;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -131,6 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3720C841DA4B43A00D0A3F1 /* KUIAlignmentButtonBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +252,7 @@
 		C3720C581DA4B13A00D0A3F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -250,13 +264,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofktu.KUIAlignmentButtonBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
 		C3720C591DA4B13A00D0A3F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -268,7 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofktu.KUIAlignmentButtonBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -291,6 +307,7 @@
 				C3720C591DA4B13A00D0A3F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
