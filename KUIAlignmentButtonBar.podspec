@@ -104,7 +104,7 @@ Pod::Spec.new do |s|
   #
 
   # s.resource  = "icon.png"
-  s.resources = "KUIAlignmentButtonBar/Assets/*.{png,xib}"
+  # s.resources = "KUIAlignmentButtonBar/Assets/*.{png,xib}"
 
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
