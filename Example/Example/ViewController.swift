@@ -18,11 +18,11 @@ class ViewController: UIViewController, KUIAlignmentButtonBarDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        horizontalButtonBar.alignment = .Right
+        horizontalButtonBar.alignment = .right
         horizontalButtonBar.delegate = self
         horizontalButtonBar.refresh()
         
-        verticalButtonBar.alignment = .Bottom
+        verticalButtonBar.alignment = .bottom
         verticalButtonBar.delegate = self
         verticalButtonBar.refresh()
     }
@@ -34,18 +34,18 @@ class ViewController: UIViewController, KUIAlignmentButtonBarDelegate {
 
 
     // MARK: - KUIAlignmentButtonBarDelegate
-    func render(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
+    func render(_ buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
         let title = "Title_\(index)"
         
-        button.layer.borderColor = UIColor.blueColor().CGColor
+        button.layer.borderColor = UIColor.blue.cgColor
         button.layer.borderWidth = 1.0
         
-        button.setTitle(title, forState: .Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        button.setTitle(title, for: [])
+        button.setTitleColor(UIColor.black, for: [])
     }
     
     // Optional
-    func click(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
+    func click(_ buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int) {
         print("index : \(index)")
     }
 }

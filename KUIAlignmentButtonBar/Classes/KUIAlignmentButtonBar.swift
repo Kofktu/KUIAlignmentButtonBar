@@ -8,40 +8,39 @@
 
 import UIKit
 
-@objc
-public protocol KUIAlignmentButtonBarDelegate: class {
+@objc public protocol KUIAlignmentButtonBarDelegate: class {
     
     // Required
-    func render(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
+    func render(_ buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
     
     // Optional
-    optional func click(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
-    optional func selected(buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
+    @objc optional func click(_ buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
+    @objc optional func selected(_ buttonBar: KUIAlignmentButtonBar, button: UIButton, index: Int)
     
 }
 
 public enum KUIAlignment : Int {
-    case Left
-    case Right
-    case Top
-    case Bottom
+    case left
+    case right
+    case top
+    case bottom
 }
 
-public class KUIAlignmentButtonBar: UIView {
+open class KUIAlignmentButtonBar: UIView {
 
-    public weak var delegate: KUIAlignmentButtonBarDelegate?
+    open weak var delegate: KUIAlignmentButtonBarDelegate?
     
-    @IBInspectable public var numberOfButtons: Int = 1
-    @IBInspectable public var buttonGap: CGFloat = 4.0
-    public var alignment: KUIAlignment = .Left
-    public var insets: UIEdgeInsets = UIEdgeInsetsZero
-    public private(set) var buttons = [UIButton]()
+    @IBInspectable open var numberOfButtons: Int = 1
+    @IBInspectable open var buttonGap: CGFloat = 4.0
+    open var alignment: KUIAlignment = .left
+    open var insets: UIEdgeInsets = UIEdgeInsets.zero
+    open fileprivate(set) var buttons = [UIButton]()
     
     // selectable
-    public var toggle: Bool = false
-    public var defaultSelectedIndex: Int = -1
-    public private(set) var selectedIndex: Int = -1
-    public var selectedButton: UIButton? {
+    open var toggle: Bool = false
+    open var defaultSelectedIndex: Int = -1
+    open fileprivate(set) var selectedIndex: Int = -1
+    open var selectedButton: UIButton? {
         guard selectedIndex >= 0 else { return nil }
         return buttons[selectedIndex]
     }
@@ -70,56 +69,44 @@ public class KUIAlignmentButtonBar: UIView {
         
         for index in 0 ..< numberOfButtons {
             let button = createButton()
-            button.selected = (index == selectedIndex)
-            button.userInteractionEnabled = button.selected ? false : true
+            button.isSelected = (index == selectedIndex)
+            button.isUserInteractionEnabled = button.isSelected ? false : true
             delegate?.render(self, button: button, index: index)
             addSubview(button)
             buttons.append(button)
             
             switch alignment {
-            case .Left:
-                addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(insets.top)-[button]-\(insets.bottom)-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: nil,
-                    views: ["button": button]))
+            case .left:
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(insets.top)-[button]-\(insets.bottom)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["button": button]))
                 
                 if let lastButton = lastButton {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Leading, relatedBy: .Equal, toItem: lastButton, attribute: .Trailing, multiplier: 1.0, constant: buttonGap))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .leading, relatedBy: .equal, toItem: lastButton, attribute: .trailing, multiplier: 1.0, constant: buttonGap))
                 } else {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: insets.left))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: insets.left))
                 }
-            case .Right:
-                addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(insets.top)-[button]-\(insets.bottom)-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: nil,
-                    views: ["button": button]))
+            case .right:
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(insets.top)-[button]-\(insets.bottom)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["button": button]))
                 
                 if let lastButton = lastButton {
-                    addConstraint(NSLayoutConstraint(item: lastButton, attribute: .Leading, relatedBy: .Equal, toItem: button, attribute: .Trailing, multiplier: 1.0, constant: buttonGap))
+                    addConstraint(NSLayoutConstraint(item: lastButton, attribute: .leading, relatedBy: .equal, toItem: button, attribute: .trailing, multiplier: 1.0, constant: buttonGap))
                 } else {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: insets.left))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: insets.left))
                 }
-            case .Top:
-                addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-\(insets.left)-[button]-\(insets.right)-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: nil,
-                    views: ["button": button]))
+            case .top:
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(insets.left)-[button]-\(insets.right)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["button": button]))
                 
                 if let lastButton = lastButton {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: lastButton, attribute: .Bottom, multiplier: 1.0, constant: buttonGap))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: lastButton, attribute: .bottom, multiplier: 1.0, constant: buttonGap))
                 } else {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: insets.top))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: insets.top))
                 }
-            case .Bottom:
-                addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-\(insets.left)-[button]-\(insets.right)-|",
-                    options: NSLayoutFormatOptions(rawValue: 0),
-                    metrics: nil,
-                    views: ["button": button]))
+            case .bottom:
+                addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(insets.left)-[button]-\(insets.right)-|", options: NSLayoutFormatOptions(rawValue: 0), metrics: nil, views: ["button": button]))
                 
                 if let lastButton = lastButton {
-                    addConstraint(NSLayoutConstraint(item: lastButton, attribute: .Top, relatedBy: .Equal, toItem: button, attribute: .Bottom, multiplier: 1.0, constant: buttonGap))
+                    addConstraint(NSLayoutConstraint(item: lastButton, attribute: .top, relatedBy: .equal, toItem: button, attribute: .bottom, multiplier: 1.0, constant: buttonGap))
                 } else {
-                    addConstraint(NSLayoutConstraint(item: button, attribute: .Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: insets.bottom))
+                    addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: insets.bottom))
                 }
             }
             
@@ -128,22 +115,22 @@ public class KUIAlignmentButtonBar: UIView {
         
         if let lastButton = lastButton {
             switch alignment {
-            case .Left:
-                addConstraint(NSLayoutConstraint(item: self, attribute: .Trailing, relatedBy: .Equal, toItem: lastButton, attribute: .Trailing, multiplier: 1.0, constant: insets.right))
-            case .Right:
-                addConstraint(NSLayoutConstraint(item: self, attribute: .Leading, relatedBy: .Equal, toItem: lastButton, attribute: .Leading, multiplier: 1.0, constant: insets.left))
-            case .Top:
-                addConstraint(NSLayoutConstraint(item: self, attribute: .Bottom, relatedBy: .Equal, toItem: lastButton, attribute: .Bottom, multiplier: 1.0, constant: insets.bottom))
-            case .Bottom:
-                addConstraint(NSLayoutConstraint(item: self, attribute: .Top, relatedBy: .Equal, toItem: lastButton, attribute: .Top, multiplier: 1.0, constant: insets.top))
+            case .left:
+                addConstraint(NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: lastButton, attribute: .trailing, multiplier: 1.0, constant: insets.right))
+            case .right:
+                addConstraint(NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: lastButton, attribute: .leading, multiplier: 1.0, constant: insets.left))
+            case .top:
+                addConstraint(NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: lastButton, attribute: .bottom, multiplier: 1.0, constant: insets.bottom))
+            case .bottom:
+                addConstraint(NSLayoutConstraint(item: self, attribute: .top, relatedBy: .equal, toItem: lastButton, attribute: .top, multiplier: 1.0, constant: insets.top))
             }
         }
     }
     
     private func createButton() -> UIButton {
-        let button = UIButton(type: .Custom)
+        let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(onPressed(_:)), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(onPressed(_:)), for: .touchUpInside)
         return button
     }
     
@@ -159,13 +146,13 @@ public class KUIAlignmentButtonBar: UIView {
     }
     
     private func clearForSelectedButton() {
-        selectedButton?.selected = false
-        selectedButton?.userInteractionEnabled = true
+        selectedButton?.isSelected = false
+        selectedButton?.isUserInteractionEnabled = true
     }
     
     // MARK: - Action
-    internal func onPressed(button: UIButton) {
-        guard let index = buttons.indexOf(button) else { return }
+    internal func onPressed(_ button: UIButton) {
+        guard let index = buttons.index(of: button) else { return }
         
         delegate?.click?(self, button: button, index: index)
         
@@ -174,8 +161,8 @@ public class KUIAlignmentButtonBar: UIView {
         if button != selectedButton {
             clearForSelectedButton()
             
-            button.userInteractionEnabled = false
-            button.selected = true
+            button.isUserInteractionEnabled = false
+            button.isSelected = true
             selectedIndex = index
             
             delegate?.selected?(self, button: button, index: index)
