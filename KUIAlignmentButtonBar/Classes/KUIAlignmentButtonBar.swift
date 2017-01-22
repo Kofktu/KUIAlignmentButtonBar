@@ -37,7 +37,7 @@ open class KUIAlignmentButtonBar: UIView {
     open fileprivate(set) var buttons = [UIButton]()
     
     // selectable
-    open var toggle: Bool = false
+    open var isToggle: Bool = false
     open var defaultSelectedIndex: Int = -1
     open fileprivate(set) var selectedIndex: Int = -1
     open var selectedButton: UIButton? {
@@ -49,7 +49,7 @@ open class KUIAlignmentButtonBar: UIView {
         removeButtons()
     }
     
-    public func refresh() {
+    open func refresh() {
         let currentSelectedIndex = selectedIndex
         
         removeButtons()
