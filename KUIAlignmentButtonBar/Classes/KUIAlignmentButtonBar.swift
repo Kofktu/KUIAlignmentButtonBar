@@ -82,7 +82,7 @@ open class KUIAlignmentButtonBar: UIView {
         for index in 0 ..< numberOfButtons {
             let button = createButton()
             button.isSelected = (index == selectedIndex)
-            button.isUserInteractionEnabled = button.isSelected ? false : true
+            button.isUserInteractionEnabled = isToggle ? (button.isSelected ? false : true) : true
             delegate?.render(self, button: button, index: index)
             addSubview(button)
             buttons.append(button)
