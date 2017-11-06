@@ -34,12 +34,12 @@ open class KUIAlignmentButtonBar: UIView {
     @IBInspectable open var buttonGap: CGFloat = 4.0
     open var alignment: KUIAlignment = .left
     open var insets: UIEdgeInsets = UIEdgeInsets.zero
-    open fileprivate(set) var buttons = [UIButton]()
+    open private(set) var buttons = [UIButton]()
     
     // selectable
     open var isToggle: Bool = false
     open var defaultSelectedIndex: Int = -1
-    open fileprivate(set) var selectedIndex: Int = -1
+    open private(set) var selectedIndex: Int = -1
     open var selectedButton: UIButton? {
         guard selectedIndex >= 0 else { return nil }
         return buttons[selectedIndex]
@@ -163,7 +163,7 @@ open class KUIAlignmentButtonBar: UIView {
     }
     
     // MARK: - Action
-    internal func onPressed(_ button: UIButton) {
+    @objc internal func onPressed(_ button: UIButton) {
         guard let index = buttons.index(of: button) else { return }
         
         delegate?.click?(self, button: button, index: index)
